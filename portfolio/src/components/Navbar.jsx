@@ -42,6 +42,15 @@ const Navbar = () => {
               key={item} 
               href={`#${item.toLowerCase().replace(' ', '-')}`}
               className="hover:text-purple-400 transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                const targetId = item.toLowerCase().replace(' ', '-');
+                const element = document.getElementById(targetId);
+                if (element) {
+                  const y = element.getBoundingClientRect().top + window.scrollY - 80;
+                  window.scrollTo({ top: y, behavior: 'smooth' });
+                }
+              }}
             >
               <span className="text-purple-500 mr-1">./</span>{item.toLowerCase()}
             </a>
@@ -73,9 +82,18 @@ const Navbar = () => {
                   href={`#${item.toLowerCase().replace(' ', '-')}`}
                   className="block px-4 py-3 rounded-lg hover:bg-zinc-900 active:bg-zinc-900 border border-transparent hover:border-zinc-800 active:border-zinc-800 transition-all font-mono text-zinc-400 hover:text-purple-400 active:text-purple-400"
                   onClick={(e) => {
-                    // Adding a small delay ensures the browser processes the anchor link navigation 
-                    // before Framer Motion unmounts the element.
-                    setTimeout(() => setIsOpen(false), 150);
+                    e.preventDefault();
+                    setIsOpen(false);
+                    const targetId = item.toLowerCase().replace(' ', '-');
+                    const element = document.getElementById(targetId);
+                    if (element) {
+                      // Small delay ensures the menu starts closing before scrolling,
+                      // preventing mobile browsers from interrupting the smooth scroll.
+                      setTimeout(() => {
+                        const y = element.getBoundingClientRect().top + window.scrollY - 80;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                      }, 100);
+                    }
                   }}
                 >
                   <span className="text-purple-500 mr-2">./</span>
