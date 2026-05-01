@@ -64,15 +64,19 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-t border-zinc-800 bg-[#27272a]/95 backdrop-blur-xl"
+            className="md:hidden overflow-hidden border-t border-zinc-800 bg-[#27272a]/95 backdrop-blur-xl"
           >
-            <div className="flex flex-col p-4 gap-4">
+            <div className="flex flex-col p-4 gap-2">
               {navItems.map((item) => (
                 <a 
                   key={item} 
                   href={`#${item.toLowerCase().replace(' ', '-')}`}
-                  className="px-4 py-3 rounded-lg hover:bg-zinc-900 border border-transparent hover:border-zinc-800 transition-all font-mono text-zinc-400 hover:text-purple-400"
-                  onClick={() => setIsOpen(false)}
+                  className="block px-4 py-3 rounded-lg hover:bg-zinc-900 active:bg-zinc-900 border border-transparent hover:border-zinc-800 active:border-zinc-800 transition-all font-mono text-zinc-400 hover:text-purple-400 active:text-purple-400"
+                  onClick={(e) => {
+                    // Adding a small delay ensures the browser processes the anchor link navigation 
+                    // before Framer Motion unmounts the element.
+                    setTimeout(() => setIsOpen(false), 150);
+                  }}
                 >
                   <span className="text-purple-500 mr-2">./</span>
                   {item.toLowerCase()}
